@@ -5,13 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMultiTenancy();
 
-builder.Services.AddDbContext<TodoDbContext>(options =>
-{
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions => sqlOptions.EnableRetryOnFailure()
-    );
-});
+builder.Services.AddDbContext<TodoDbContext>();
 
 var app = builder.Build();
 

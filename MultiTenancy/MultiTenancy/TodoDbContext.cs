@@ -13,8 +13,16 @@ public class TodoDbContext : DbContext
 
     public DbSet<TodoItem> Todos => Set<TodoItem>();
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=todo.db");
+        base.OnConfiguring(optionsBuilder);
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-        => modelBuilder.Entity<TodoItem>().HasQueryFilter(t => t.TenantId == _tenant.Id);
+    {
+        
+        modelBuilder.Entity<TodoItem>().HasQueryFilter(t => t.TenantId == _tenant.Id);
+    }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
